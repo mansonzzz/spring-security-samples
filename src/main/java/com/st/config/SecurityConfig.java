@@ -6,6 +6,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 /**
  * @author zhangtian1
+ * WebSecurityConfigurerAdapter 默认隐式启用了多个安全设置
+ * @see WebSecurityConfigurerAdapter#applyDefaultConfiguration(HttpSecurity)
+ * 同时应用会提供注销功能，访问`/logout`来注销用户
+ * - 使 HTTP Session 失效
+ * - 清除 SecurityContext
+ * - 清除 RememberMe cookie
+ * - 重定向到 /login?logout
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -13,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests(authorize -> authorize
                         .antMatchers("/css/**", "/index").permitAll()
                         .antMatchers("/user/**").hasRole("USER"))

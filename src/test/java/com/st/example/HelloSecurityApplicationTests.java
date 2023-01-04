@@ -83,7 +83,9 @@ public class HelloSecurityApplicationTests {
         HttpSession session = mvcResult.getRequest().getSession(false);
 
         assert session != null;
-        this.mockMvc.perform(post("/logout").with(csrf()).session((MockHttpSession) session))
+        this.mockMvc.perform(post("/logout")
+                        .with(csrf())
+                        .session((MockHttpSession) session))
                 .andExpect(unauthenticated());
         this.mockMvc.perform(get("/user/index").session((MockHttpSession) session))
                 .andExpect(unauthenticated())
